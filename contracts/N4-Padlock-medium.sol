@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.11;
-
 contract N4Padlock {
     bool public tumbler1 = false;
     bool public tumbler2 = false;
@@ -21,7 +20,6 @@ contract N4Padlock {
 
     function pick1(uint256 passphrase) public {
         require(tries <= maxTries, "No lockpicks left");
-
         if (keccak256(abi.encodePacked(passphrase)) == passHash) {
             tumbler1 = true;
         } else {
